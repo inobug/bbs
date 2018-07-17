@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{   blog.title }}</title>
+    <link rel="stylesheet" href="/static/bootstrp/css/bootstrap.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/bootstrp/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/homesite_css/{{ blog.theme }}">
+    <link rel="stylesheet" href="/static/css/homesite_css/default.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{{ blog.title }}</a>
+    </div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.username %}
+                    <li><a href="/index/">博客园</a>
+                    <li><a href="/backstage/">我的博客</a>
+                    </li>
+                {% else %}
+                    <li><a href="/index/">博客园</a>
+                    <li><a href="/login/">登陆</a></li>
+                    <li><a href="#">注册</a></li>
+                {% endif %}
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container-fluid">
+    <div class="row">
+{#    左侧边栏#}
+            {% load my_tags %}
+           {% get_query_data username %}
+
+{#  个人站点文章页显示页面#}
+
+        <div class="col-md-9 articless">
+        {% block content %}
+            <div class="article_list">
+                {% for article in article_list %}
+                 <div class="article_item clearfix">
+                      <h5><a href="/{{ username }}/articles/{{ article.pk }}">{{ article.title }}</a></h5>
+                      <div>
+                          <span class="media-right small desc ">
+                              {{ article.desc }}
+                          </span>
+
+                      </div>
+                      <div class="info small  pull-right">
+                          <span>posted</span> <span>@</span>   <span>{{ article.create_time|date:'Y-m-d H:i' }}</span>&nbsp;&nbsp;
+                           <span class="glyphicon glyphicon-comment coment1"></span><a href="">评论({{ article.comment_count }})</a>&nbsp;&nbsp;
+                           <span class="glyphicon glyphicon-thumbs-up"></span><a href="">点赞({{ article.up_count }})</a>
+                      </div>
+                 </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+
+
+        </div>
+    {% endblock %}
+    </div>
+</div>
+{% block js %}
+{% endblock %}
+</body>
+</html>

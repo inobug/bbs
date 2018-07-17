@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录页面</title>
+    <link rel="stylesheet" href="/static/css/component.css">
+    <link rel="stylesheet" href="/static/css/demo.css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+<script src="/static/js/jquery.js"></script>
+<![endif]-->
+</head>
+<body>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>欢迎登录博客园</h3>
+						<form name="f" action="" method="post">
+                            {% csrf_token %}
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname"  class="text logname" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="logpass" class="text logpass" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+							</div>
+                            <div class="logina">
+								  <a href="/adduser/">没有账号？点击此处注册</a>
+							</div>
+							<div class="mb2"><a class="act-but submit logbtn" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="/static/js/TweenLite.min.js"></script>
+		<script src="/static/js/EasePack.min.js"></script>
+		<script src="/static/js/rAF.js"></script>
+		<script src="/static/js/demo-1.js"></script>
+<script>
+    $('.logbtn').click(function () {
+        $.ajax({
+            url:'',
+            type:'post',
+            data:{
+                user:$('.logname').val(),
+                pwd:$('.logpass').val()
+            },
+            success:function(data) {
+                console.log(data)
+                if (data=='1'){
+                    window.location='/index/'
+
+                }else{
+                   console.log(data)
+                    alert('用户名或者密码输入有误！')
+                }
+
+            }
+        })
+    })
+</script>
+</body>
+
+
+
+
+</html>

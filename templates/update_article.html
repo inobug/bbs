@@ -1,0 +1,31 @@
+{% extends 'addarticles.html' %}
+{% block title %}
+    <input name="title" type="text" maxlength="200" id="Editor_Edit_txbTitle" onblur="localPreserver.saveDraftTitle();" onkeydown="title_keydown(event);" style="width:99%;" value="{{ article_obj.title }}">
+{% endblock %}
+{% block content %}
+             <textarea name="content" id="article_content" cols="30" rows="10"  >{{ article_obj.content }}</textarea>
+{% endblock %}
+{% block cate %}
+    {% for cate in cate_list1 %}
+        {% if cate.title == cat  %}
+        <td><input id={{ cate.pk }}+cate type="radio"  name="cate" value="{{ cate.pk }}"    checked="checked"><label for={{ cate.pk }}+cate>{{ cate.title }}</label></td>
+        {% else %}
+        <td><input id={{ cate.pk }}+cate type="radio"  name="cate" value="{{ cate.pk }}"  ><label for={{ cate.pk }}+cate>{{ cate.title }}</label></td>
+        {% endif %}
+        
+{#    <td><input id={{ cate.pk }}+cate type="radio"  name="cate" value="{{ cate.pk }}"><label for={{ cate.pk }}+cate>{{ cate.title }}</label></td>#}
+    {% endfor %}
+{% endblock %}
+{% block tag %}
+    {% for tag in tags %}
+        {% if tag.title in taga %}
+                <td><input id={{ tag.pk }}+tags type="checkbox"  name="tags" value="{{ tag.pk }} " checked="checked"><label for={{ tag.pk }}+tags>{{ tag.title }}</label></td>
+        {% else %}
+                <td><input id={{ tag.pk }}+tags type="checkbox"  name="tags" value="{{ tag.pk }}"><label for={{ tag.pk }}+tags>{{ tag.title }}</label></td>
+
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+{% block js %}
+    <script></script>
+{% endblock %}

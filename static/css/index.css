@@ -1,0 +1,75 @@
+ *{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            margin:5px 10px;
+            font-size: 12px;
+        }
+        .headleft{
+            float: right;
+        }
+        .headleft>span{
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .headleft>span>a{
+            text-decoration: none;
+        }
+         .headleft>span>a:visited{
+           color: blue;
+        }
+        .header_logo{
+                margin-top: 5px;
+                border-left: 1px solid #d8dfea;
+                border-right: 1px solid #d8dfea;
+                border-top: 1px solid #d8dfea;
+                border-bottom: 1px solid #d8dfea;
+                height: 65px
+        }
+        .logo{
+                position: absolute;
+                left: 18px;
+                top: 30px;
+        }
+        .nav_menu{
+                margin-top:5px;
+                padding: 0;
+                height: 30px;
+                line-height: 30px;
+                background-color: #2b6695;
+        }
+        .nav_menu>a:link{
+                color: #eee;
+                text-decoration: none;
+        }
+        .nav_menu a{
+                color: white;
+                font-size: 14px;
+                padding-left: 24px;
+        }
+        .container-fluid{
+            margin-top: 5px;
+            margin-left: -15px;
+        }
+        .search1,.search2{
+         margin-top: 10px;
+        }
+        .search11{
+                width: 180px;
+                margin-right: 8px;
+                vertical-align: middle;
+                height: 20px;
+                margin-left: 10px;
+                border: 1px solid #7e9db9;
+                padding: 2px;
+        }
+        .serach_btn{
+                vertical-align: middle;
+                color: #666;
+                width: 80px;
+                font-size: 13px;
+        }
+        .info{
+            margin-top: 10px;
+        }

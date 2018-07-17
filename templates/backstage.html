@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block link %}
+      <link rel="stylesheet" href="/static/css/backstage.css">
+        <script src="/static/js/jquery.js"></script>
+    {% endblock %}
+</head>
+<body>
+{#顶栏#}
+<div id="top_nav">
+        <div id="left">
+            «  <a href="/index/">网站首页</a>
+            <a href="javascript:void(0)">园子</a>
+            <a href="javascript:void(0)">新闻</a>
+            <a href="javascript:void(0)">博问</a>
+            <a href="javascript:void(0)">闪存</a>
+            <a href="javascript:void(0)">收藏</a>
+            <a href="javascript:void(0)">搜索</a>
+        </div>
+        <div id="right">
+            <a href="/{{ request.user.username }}/">{{ request.user.username }}</a>·
+            <a id="user_nav_blog_link" href="/{{ request.user.username }}/">我的博客</a>
+            <span id="user_nav_blog_split">·</span>
+            <a href="javascript:void(0)">短消息<span id="msg_count"></span></a>·
+            <a href="javascript:void(0)">设置</a>·
+            <a href="/logout/">退出</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+{#主体部分#}
+<div id="main">
+{#    右上角 操作栏#}
+        <div id="main_nav"><a href="" target="_blank">修改密码</a>|
+            <a href="">备份</a>|
+            <a href="" target="_blank">模板</a></div>
+{#    logo图#}
+        <div id="main_head">
+            <div id="blog_title"><a href="{{ request.user.username }}">{{ request.user.username }}</a></div>
+            <div id="SiteTitle"><a href="/index/"><img alt="logo" src="/static/images/adminlogo.gif"></a></div>
+        </div>
+        <div class="clear"></div>
+        <div id="main_body">
+            <div id="main_wrap">
+                <div id="main_container">
+                    <div id="tab_nav">
+                        <ul>
+                            <li><a id="TabPosts" href="/backstage/" class="current_nav">随笔</a></li>
+                            <li><a id="TabArticles" href="javascript:void(0)">文章</a></li>
+                            <li><a id="TabDiary" href="javascript:void(0)">日记</a></li>
+                            <li><a id="TabFeedback" href="javascript:void(0)">评论</a></li>
+                            <li><a id="TabLinks" href="javascript:void(0)">链接</a></li>
+                            <li><a id="TabFavorites" href="javascript:void(0)">收藏</a></li>
+                            <li><a id="TabGalleries" href="javascript:void(0)">相册</a></li>
+                            <li><a id="TabFiles" href="javascript:void(0)">文件</a></li>
+                            <li><a id="TabConfigure" href="javascript:void(0)">设置</a></li>
+                            <li><a id="TabPreferences" href="javascript:void(0)">选项</a></li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div id="sub_nav">
+&nbsp;
+                    </div>
+{#                    中间的文章显示#}
+                {% block  content_area%}
+                    <div id="content_area">
+                        <div id="post_list">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <th class="post-title">标题</th>
+{#                                    <th class="publish-status">发布状态</th>#}
+                                    <th>评论数</th>
+                                    <th>点赞数</th>
+                                    <th>操作</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr id="post-row-9266822">
+                                {% for foo in  article_lis  %}
+                                <tr>
+                                    <td class="post-title"><a href="/{{ user.username }}/articles/{{ foo.pk }}">{{ foo.title }}</a>({{ foo.create_time |date:'Y-m-d H:i'}})</td>
+                                    <td>{{ foo.comment_count }}</td>
+                                    <td>{{ foo.up_count }}</td>
+                                    <td><a href="/update_article/{{ foo.pk }}" }>编辑</a></td>
+                                    <td><a href="javascript:void(0)"  class="delbtn" id={{ foo.pk }}>删除</a></td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody></table>
+                        </div>
+{#                        分页器#}
+{#                        <div class="pager"><a href="/posts" class="p_1 current">1</a><a href="/posts?page=2" class="p_2">2</a><a href="/posts?page=2">Next &gt;</a></div>#}
+                    </div>
+                {% endblock %}
+                </div>
+            </div>
+{#        左侧操作栏#}
+            <div id="left_container">
+                <div id="left_nav">
+                    <h2>操作</h2>
+                    <ul>
+                        <li><a href="/addarticles/">添加新随笔</a></li>
+                        <li><a href="javascript:void(0)" id="nav_draft">草稿箱</a></li>
+                        <li><a href="javascript:void(0)">设置默认编辑器</a></li>
+                    </ul>
+                </div>
+                <div id="sidebar_categories">
+                    <h2>分类</h2>
+                    <ul id="post_categories">
+                        <li><a href="javascript:void(0)">[编辑分类]</a></li>
+                    {% block cata %}
+                        {% for foo in cate_list %}
+                        <li><a href="javascript:void(0)">{{ foo.0 }}({{  foo.1 }})</a></li>
+                        {% endfor %}
+                    {% endblock %}
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+{#脚部#}
+<div id="footer">
+        <a href="javascript:void(0)">联系我们</a><a href="javascript:void(0)">反馈问题</a>©2018<a href="/index/">博客园</a>/ 代码改变世界
+    </div>
+     {% block js %}
+<script>
+    $('.delbtn').click(function () {
+        console.log($(this).attr('id'))
+        var _this=$(this)
+        $.ajax({
+            url:'/delarticle/',
+            type:'get',
+            data:{
+              idd:$(this).attr('id')
+            },
+            success:function (data) {
+                console.log(data)
+                _this.parent().parent().after('<p> 此文章已删除 </p>')
+                _this.parent().parent().remove()
+            }
+        })
+    })
+
+</script>
+{% endblock %}
+</body>
+</html>

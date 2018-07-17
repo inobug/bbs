@@ -1,0 +1,96 @@
+{%  extends 'backstage.html' %}
+    {% block link %}
+      <link rel="stylesheet" href="/static/css/backstage.css">
+      <link rel="stylesheet" href="/static/css/addarticles.css">
+      <link rel="stylesheet" href="/static/bootstrp/css/bootstrap.css">
+    {% endblock %}
+ {% block  content_area%}
+     <form action="" method="post">
+         {% csrf_token %}
+         <div id="Main">
+         <div id="Editor_Edit_Header" class="CollapsibleTitle">
+            <span id="Editor_Edit_headerTitle">添加随笔</span>
+         </div>
+         <div id="edit_title">
+                <b>标题</b>
+                <br>
+             {% block title %}
+                <input name="title" type="text" maxlength="200" id="Editor_Edit_txbTitle" onblur="localPreserver.saveDraftTitle();" onkeydown="title_keydown(event);" style="width:99%;">
+                 {% endblock %}
+         </div>
+         <div id="edit_body_tip">
+                <b>内容</b>(TinyMCE编辑器，支持拖放/粘贴上传图片)
+                <span id="write_hint" style="color: green;">
+                    <a href="javascript:void(0);" >查看自动保存内容</a>
+                </span>
+         </div>
+         <div>
+             {% block content %}
+             <textarea name="content" id="article_content" cols="30" rows="10"></textarea>
+             {% endblock %}
+         </div>
+{#         分类#}
+         <div id="Editor_Edit_APOptions_Advancedpanel1">
+					<div id="Editor_Edit_APOptions_Advancedpanel1_Header" class="subCollapsibleTitle">
+                        <span id="Editor_Edit_APOptions_Advancedpanel1_headerTitle" class="subCollapsibleTitleText">个人分类</span>
+					</div><div id="Editor_Edit_APOptions_Advancedpanel1_Contents" class="Edit" style="">
+
+                    <table id="Editor_Edit_APOptions_Advancedpanel1_cklCategories" style="width:95%;">
+							<tbody>
+                            <tr>
+                            {% block cate %}
+                                 {% for cate in cate_list1 %}
+								<td><input id={{ cate.pk }}+cate type="radio"  name="cate" value="{{ cate.pk }}"><label for={{ cate.pk }}+cate>{{ cate.title }}</label></td>
+                                 {% endfor %}
+                            {% endblock %}
+							</tr>
+						</tbody></table>
+
+					</div>
+				</div>
+{#         标签#}
+         <div id="Editor_Edit_APOptions_Advancedpanel1">
+					<div id="Editor_Edit_APOptions_Advancedpanel1_Header" class="subCollapsibleTitle">
+						<span id="Editor_Edit_APOptions_Advancedpanel1_headerTitle" class="subCollapsibleTitleText">Tag标签</span>
+					</div><div id="Editor_Edit_APOptions_Advancedpanel1_Contents" class="Edit" style="">
+
+                    <table id="Editor_Edit_APOptions_Advancedpanel1_cklCategories" style="width:95%;">
+							<tbody>
+                            <tr>
+                                {% block tag %}
+                                 {% for tag in tags %}
+								<td><input id={{ tag.pk }}+tags type="checkbox"  name="tags" value="{{ tag.pk }}"><label for={{ tag.pk }}+tags>{{ tag.title }}</label></td>
+                                 {% endfor %}
+                                {% endblock %}
+							</tr>
+						</tbody></table>
+
+					</div>
+				</div>
+                 <input type="submit" class="btn btn-default">
+         </div>
+     </form>
+     <script src="/static/kindeditor/kindeditor-all.js"></script>
+     <script>
+                KindEditor.ready(function(K) {
+                        window.editor = K.create('#article_content', {
+                            width:1157,
+                            height:600,
+                            resizeType:0,
+                            uploadJson:"/upload/",
+                            {#extraFileUploadParams:#}
+                            {#    {#}
+                            {#        csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()},#}
+                                    filePostName:"upload_img"
+                        }
+
+                        );
+                });
+
+     </script>
+         {% endblock %}
+  {% block cata %}
+                        {% for foo in cate_list %}
+                        <li><a href="javascript:void(0)">{{ foo.0 }}({{  foo.1 }})</a></li>
+                        {% endfor %}
+  {% endblock %}
