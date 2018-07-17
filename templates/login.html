@@ -28,6 +28,12 @@
 								<span class="us_uer"></span>
 								<input name="logpass" class="text logpass" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
 							</div>
+                            <div class="input_outer1">
+								<span class="us_ue1r"></span>
+								<input name="code" class="text1 logcode" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="text" placeholder="请输入验证码">
+                                <div class="code_img"><img  onclick="changeImg(this);" src="/code/" alt="" title="点击更换"></div>
+                            </div>
+
                             <div class="logina">
 								  <a href="/adduser/">没有账号？点击此处注册</a>
 							</div>
@@ -42,19 +48,26 @@
 		<script src="/static/js/rAF.js"></script>
 		<script src="/static/js/demo-1.js"></script>
 <script>
+    function changeImg(ths) {
+            ths.src = ths.src + '?';
+        }
     $('.logbtn').click(function () {
+        console.log($('.logcode').val())
         $.ajax({
             url:'',
             type:'post',
             data:{
                 user:$('.logname').val(),
-                pwd:$('.logpass').val()
+                pwd:$('.logpass').val(),
+                code:$('.logcode').val()
             },
             success:function(data) {
                 console.log(data)
                 if (data=='1'){
                     window.location='/index/'
 
+                }else if(data=='2'){
+                    alert('验证码有误！')
                 }else{
                    console.log(data)
                     alert('用户名或者密码输入有误！')

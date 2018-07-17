@@ -26,6 +26,7 @@ urlpatterns = [
     path('comment/', views.comment),
     path('backstage/', views.backstage),
     path('upload/', views.upload),
+    path('code/', views.code),
     path('delarticle/', views.delarticle),
     re_path('update_article/(?P<id>\d+)', views.update_article),
     path('addarticles/', views.addarticles),

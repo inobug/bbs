@@ -6,21 +6,32 @@ from blog.models import ArticleUpDown,Comment
 import json
 from bbs import settings
 import os
+from utils.code import check_code
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from django.db.models import F
 from django.db import transaction
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+def code(request):
+    img,random_code = check_code()
+    request.session['session_name'] =  random_code
+    # print(request.session['random_code'])
+    from io import BytesIO
+    stream = BytesIO()
+    img.save(stream, 'png')
+    return HttpResponse(stream.getvalue())
 
 # Create your views here.
 # 登录
 def login(request):
     if request.method=='POST':
-
+        code=request.POST.get('code')
         user=request.POST.get('user')
         pwd=request.POST.get('pwd')
         print(user,pwd)
+        session_name = request.session['session_name']
+        if code.upper() != session_name.upper():
+                return HttpResponse('2')
         user=auth.authenticate(username=user,password=pwd)
         if user:
             auth.login(request,user)
